@@ -33,5 +33,14 @@ jobs:
         docker tag isaiasdev/nlw-devops:${{ steps.generate_sha.outputs.sha }} isaiasdev/nlw-devops:latest
         docker push isaiasdev/nlw-devops:latest
 
+    - name: Update image tag
+      uses: fjogeleit/yaml-update-action@main
+      with:
+        branch: main
+        valueFile: 'deploy/values.yaml'
+        propertyPath: 'image.tag'
+        value: "${{ steps.generate_sha.outputs.sha }}"
+        commitChange: true
+        message: 'NEW: Update tag in values helm'
 
 
